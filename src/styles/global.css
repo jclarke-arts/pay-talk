@@ -1,1 +1,10 @@
 @import "tailwindcss";
+
+@font-face {
+  font-family: 'technomat';
+  src: url("/fonts/technomat.woff");
+}
+
+@theme {
+  --font-sans: "technomat", "sans-serif"; 
+}

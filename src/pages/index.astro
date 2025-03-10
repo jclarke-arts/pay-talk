@@ -2,14 +2,21 @@
 import Layout from "../layouts/Layout.astro";
 import MapViewer from "../components/Map";
 import { getCollection } from "astro:content";
+import "../styles/global.css";
 
+// Fetch all locations
 const locations = await getCollection("locations");
+
+// Process the locations to include the body content
 const processedLocations = locations.map((location) => ({
   ...location,
   body: location.body,
 }));
 ---
 
-<Layout>
+<Layout title="Interactive Location Map with Audio Guides">
+  <nav class="fixed z-20 bg-white p-6">
+    <p>The Pay Talk Project</p>
+  </nav>
   <MapViewer client:load locations={processedLocations} />
 </Layout>
