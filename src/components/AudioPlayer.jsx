@@ -1,11 +1,35 @@
 import React, { useState, useRef, useEffect } from 'react';
 
 const AudioPlayer = ({ currentTrack, onClose }) => {
-  const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
+  const audioRef = useRef(null);
+  const animationRef = useRef(null);
   
+  // Setup timer update
+  useEffect(() => {
+    const updateProgress = () => {
+      if (audioRef.current) {
+        setCurrentTime(audioRef.current.currentTime);
+        animationRef.current = requestAnimationFrame(updateProgress);
+      }
+    };
+  
+    if (isPlaying) {
+      animationRef.current = requestAnimationFrame(updateProgress);
+    } else if (animationRef.current) {
+      cancelAnimationFrame(animationRef.current);
+    }
+    
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, [isPlaying]);
+  
+  // Handle track changes
   useEffect(() => {
     if (currentTrack) {
       // Reset player state when track changes
@@ -24,6 +48,7 @@ const AudioPlayer = ({ currentTrack, onClose }) => {
     }
   }, [currentTrack]);
   
+  // Setup audio event listeners
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -32,13 +57,12 @@ const AudioPlayer = ({ currentTrack, onClose }) => {
       setDuration(audio.duration);
     };
     
-    const handleTimeUpdate = () => {
-      setCurrentTime(audio.currentTime);
-    };
-    
     const handleEnded = () => {
       setIsPlaying(false);
       setCurrentTime(0);
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
     };
     
     // If the track is already loaded, set the duration immediately
@@ -47,17 +71,20 @@ const AudioPlayer = ({ currentTrack, onClose }) => {
     }
     
     audio.addEventListener('loadedmetadata', handleLoadedMetadata);
-    audio.addEventListener('timeupdate', handleTimeUpdate);
     audio.addEventListener('ended', handleEnded);
     
     return () => {
       audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
-      audio.removeEventListener('timeupdate', handleTimeUpdate);
       audio.removeEventListener('ended', handleEnded);
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
     };
-  }, [currentTrack]); // Re-run when track changes
+  }, [currentTrack]);
   
   const togglePlayPause = () => {
+    if (!audioRef.current) return;
+    
     if (isPlaying) {
       audioRef.current.pause();
     } else {
@@ -69,15 +96,15 @@ const AudioPlayer = ({ currentTrack, onClose }) => {
   };
   
   const handleSeek = (e) => {
-    if (audioRef.current) {
-      const seekTime = parseFloat(e.target.value);
-      setCurrentTime(seekTime);
-      audioRef.current.currentTime = seekTime;
-      
-      // If it was paused and we're seeking, don't automatically play
-      if (!isPlaying) {
-        audioRef.current.pause();
-      }
+    if (!audioRef.current) return;
+    
+    const seekTime = parseFloat(e.target.value);
+    setCurrentTime(seekTime);
+    audioRef.current.currentTime = seekTime;
+    
+    // If it was paused and we're seeking, don't automatically play
+    if (!isPlaying) {
+      audioRef.current.pause();
     }
   };
   
@@ -93,7 +120,11 @@ const AudioPlayer = ({ currentTrack, onClose }) => {
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg p-3 z-50">
       <div className="max-w-screen-lg mx-auto flex items-center">
-        <audio ref={audioRef} src={currentTrack.audioSrc} preload="metadata" />
+        <audio 
+          ref={audioRef} 
+          src={currentTrack.audioSrc} 
+          preload="metadata"
+        />
         
         <div className="flex-shrink-0 w-12 flex justify-center">
           <button 
@@ -122,7 +153,7 @@ const AudioPlayer = ({ currentTrack, onClose }) => {
               type="range"
               min="0"
               max={duration || 0}
-              value={currentTime}
+              value={currentTime || 0}
               onChange={handleSeek}
               className="w-full h-1 mx-2 bg-gray-300 rounded-lg appearance-none cursor-pointer"
             />
