@@ -1,0 +1,15 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MapViewer from "../components/Map";
+import { getCollection } from "astro:content";
+
+const locations = await getCollection("locations");
+const processedLocations = locations.map((location) => ({
+  ...location,
+  body: location.body,
+}));
+---
+
+<Layout>
+  <MapViewer client:load locations={processedLocations} />
+</Layout>
