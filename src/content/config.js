@@ -10,6 +10,7 @@ const locations = defineCollection({
     caption: z.string().optional(),
     audioFile: z.string().optional(),
     audioTitle: z.string().optional(),
+    filters: z.array(z.string()).optional(),
   }),
 });
 
