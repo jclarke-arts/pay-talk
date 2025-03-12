@@ -118,7 +118,7 @@ const AudioPlayer = ({ currentTrack, onClose }) => {
   if (!currentTrack) return null;
   
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg p-3 z-50">
+    <div className="fixed bottom-0 left-0 right-0 bg-p60-blue text-p60-paper p-3 z-50">
       <div className="max-w-screen-lg mx-auto flex items-center">
         <audio 
           ref={audioRef} 
@@ -129,7 +129,7 @@ const AudioPlayer = ({ currentTrack, onClose }) => {
         <div className="flex-shrink-0 w-12 flex justify-center">
           <button 
             onClick={togglePlayPause}
-            className="w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center"
+            className="w-10 h-10 rounded-full bg-p60-orange text-p60-paper flex items-center justify-center"
           >
             {isPlaying ? (
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
@@ -144,11 +144,11 @@ const AudioPlayer = ({ currentTrack, onClose }) => {
         </div>
         
         <div className="mx-4 flex-grow">
-          <div className="font-medium text-gray-800 mb-1 truncate">
+          <div className="font-medium text-p60-paper mb-1 truncate">
             {currentTrack.title || "Unknown Track"}
           </div>
           <div className="flex items-center">
-            <span className="text-xs text-gray-500 w-8">{formatTime(currentTime)}</span>
+            <span className="text-xs text-p60-paper w-8">{formatTime(currentTime)}</span>
             <input
               type="range"
               min="0"
@@ -157,13 +157,13 @@ const AudioPlayer = ({ currentTrack, onClose }) => {
               onChange={handleSeek}
               className="w-full h-1 mx-2 bg-gray-300 rounded-lg appearance-none cursor-pointer"
             />
-            <span className="text-xs text-gray-500 w-8">{formatTime(duration)}</span>
+            <span className="text-xs text-p60-paper w-8">{formatTime(duration)}</span>
           </div>
         </div>
         
         <button 
           onClick={onClose} 
-          className="text-gray-400 hover:text-gray-500 ml-2"
+          className="bg-p60-paper rounded-full w-10 h-10 flex justify-center items-center text-p60-blue ml-2"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
             <path fillRule="evenodd" d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z" clipRule="evenodd" />

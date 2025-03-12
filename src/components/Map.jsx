@@ -1,11 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Map, Marker, Popup } from 'react-map-gl';
+import { Map, Marker } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import AudioPlayer from './AudioPlayer';
 import SpatialAudioManager from './SpatialAudioManager';
+import Modal from './Modal';
 
 export default function MapViewer({ locations }) {
-  const [popupInfo, setPopupInfo] = useState(null);
+  const [modalInfo, setModalInfo] = useState(null);
   const [currentTrack, setCurrentTrack] = useState(null);
   const mapRef = useRef(null);
   const audioManagerRef = useRef(null);
@@ -98,13 +99,18 @@ export default function MapViewer({ locations }) {
     }
   };
 
+  // Close modal - now handled by the Modal component with animation
+  const closeModal = () => {
+    setModalInfo(null);
+  };
+
   return (
     <div className="relative h-full">
       <Map
         ref={mapRef}
         initialViewState={{
-          longitude: import.meta.env.PUBLIC_DEFAULT_LONGITUDE || 2.294481,
-          latitude: import.meta.env.PUBLIC_DEFAULT_LATITUDE || 48.858372,
+          longitude: import.meta.env.PUBLIC_DEFAULT_LONGITUDE,
+          latitude: import.meta.env.PUBLIC_DEFAULT_LATITUDE,
           zoom: 12
         }}
         onClick={handleMapInteraction}
@@ -112,6 +118,13 @@ export default function MapViewer({ locations }) {
         style={{ width: '100%', height: '100vh' }}
         mapStyle={import.meta.env.PUBLIC_MAPBOX_STYLE_URI || "mapbox://styles/mapbox/streets-v11"}
         mapboxAccessToken={import.meta.env.PUBLIC_MAPBOX_ACCESS_TOKEN}
+        maxBounds={[
+          [-0.389, 51.38],
+          [0.136, 51.536]
+        ]}
+        dragRotate={false}
+        maxZoom={14}
+        minZoom={11}
       >
         {locations.map((location) => (
           <Marker
@@ -119,48 +132,23 @@ export default function MapViewer({ locations }) {
             longitude={location.data.coordinates[1]}
             latitude={location.data.coordinates[0]}
             anchor="bottom"
-            className='text-3xl'
+            className='text-5xl cursor-pointer'
             onClick={e => {
               e.originalEvent.stopPropagation();
-              setPopupInfo(location);
+              setModalInfo(location);
             }}
           >
             📍
           </Marker>
         ))}
-
-        {popupInfo && (
-          <Popup
-            anchor="top"
-            longitude={popupInfo.data.coordinates[1]}
-            latitude={popupInfo.data.coordinates[0]}
-            onClose={() => setPopupInfo(null)}
-          >
-            <div className="popup">
-              <h3 className="">{popupInfo.data.title}</h3>
-              <p>{popupInfo.body}</p>
-              
-              {popupInfo.data.audioFile && (
-                <button 
-                  onClick={() => handlePlayAudio(popupInfo)}
-                  className="mt-2 px-3 py-1 bg-blue-500 text-white rounded-md flex items-center text-sm"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 mr-1">
-                    <path fillRule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z" clipRule="evenodd" />
-                  </svg>
-                  Play Full Audio Guide
-                </button>
-              )}
-            </div>
-          </Popup>
-        )}
       </Map>
 
-      {/* Help text for spatial audio feature */}
-      {/* <div className="absolute top-4 left-4 bg-white/80 backdrop-blur-sm p-3 rounded-lg shadow-md max-w-xs z-10">
-        <h3 className="text-sm font-medium mb-1">🔊 Spatial Audio Enabled</h3>
-        <p className="text-xs text-gray-600">Move your cursor close to pins to hear location audio. The closer you get, the louder it plays!</p>
-      </div> */}
+      {/* Custom Modal instead of Popup */}
+      <Modal 
+        info={modalInfo} 
+        onClose={closeModal} 
+        onPlayAudio={handlePlayAudio} 
+      />
       
       {/* Persistent audio player */}
       <AudioPlayer currentTrack={currentTrack} onClose={closeAudioPlayer} />

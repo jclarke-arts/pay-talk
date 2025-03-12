@@ -10,8 +10,8 @@
   --font-sans: "technomat", sans-serif; 
   --font-serif: "Old Standard TT", serif;
   --color-p60-blue: #021B4C;
-  --color-p60-orange: #fc6902;
-  --color-p60-paper: #fde4d4;
+  --color-p60-orange: #F67925;
+  --color-p60-paper: #F9E6D6;
 }
 
 html,
@@ -19,16 +19,45 @@ body {
   @apply w-full h-full m-0 p-0;
 }
 
-.popup {
-  @apply font-sans max-w-[400px] p-2.5;
+/* New modal styles */
+table {
+  border-collapse: collapse;
+  border-style: hidden;
 }
 
-.popup h3 {
-  @apply mt-0 mb-2.5 mx-0 text-2xl;
+table td, table th {
+  border: 1px solid black;
 }
 
-.popup p {
-  @apply font-serif mb-3 m-0;
+.stroke {
+  -webkit-text-stroke: 2px;
+}
+
+/* Modal animation styles */
+.modal-container {
+  @apply transition-opacity;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes modalFadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+  }
 }
 
 input[type="range"] {
