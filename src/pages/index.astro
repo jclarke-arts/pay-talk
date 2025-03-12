@@ -8,10 +8,16 @@ import "../styles/global.css";
 const locations = await getCollection("locations");
 
 // Process the locations to include the body content
-const processedLocations = locations.map((location) => ({
-  ...location,
-  body: location.body,
-}));
+const processedLocations = await Promise.all(
+  locations.map(async (location) => {
+    const { Content } = await location.render();
+    return {
+      ...location,
+      body: location.body,
+      Content,
+    };
+  })
+);
 ---
 
 <Layout title="Interactive Location Map with Audio Guides">
@@ -25,9 +31,9 @@ const processedLocations = locations.map((location) => ({
       </p>
     </div>
     <div
-      class="p-3 m-3 bg-p60-orange hover:bg-p60-blue transform cursor-pointer text-p60-paper rounded-full w-12 h-12 flex justify-center items-center"
+      class="p-3 m-3 bg-p60-blue hover:bg-p60-orange transform cursor-pointer text-p60-paper rounded-full w-10 h-10 flex justify-center items-center"
     >
-      <p class="text-4xl font-serif italic translate-y-0.5 -translate-x-0.25">
+      <p class="text-3xl font-serif italic translate-y-0.5 -translate-x-0.25">
         i
       </p>
     </div>

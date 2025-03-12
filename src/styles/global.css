@@ -12,6 +12,7 @@
   --color-p60-blue: #021B4C;
   --color-p60-orange: #F67925;
   --color-p60-paper: #F9E6D6;
+  --color-p60-black: #191919;
 }
 
 html,
@@ -60,6 +61,7 @@ table td, table th {
   }
 }
 
+/* Styling for input range sliders */
 input[type="range"] {
   @apply h-1 rounded-[5px] bg-white;
   -webkit-appearance: none;
@@ -70,4 +72,40 @@ input[type="range"]::-webkit-slider-thumb {
 }
 input[type="range"]::-moz-range-thumb {
   @apply h-3 w-3 cursor-pointer rounded-[50%] border-[none] bg-p60-orange;
+}
+
+/* Filter styles */
+.filter-badge {
+  @apply inline-block px-2 py-1 rounded-full text-xs bg-p60-orange text-white;
+}
+
+.filter-active .mapboxgl-marker {
+  @apply scale-110 transition-transform;
+  filter: drop-shadow(0 0 8px rgba(246, 121, 37, 0.8));
+}
+
+.filter-dropdown button {
+  @apply transition-all duration-200;
+}
+
+.filter-dropdown button:hover {
+  @apply bg-p60-paper;
+}
+
+/* Animated filter button */
+.filter-button-active {
+  @apply bg-p60-orange border-p60-blue;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(246, 121, 37, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(246, 121, 37, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(246, 121, 37, 0);
+  }
 }

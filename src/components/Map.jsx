@@ -1,13 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Map, Marker } from 'react-map-gl';
+import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import AudioPlayer from './AudioPlayer';
 import SpatialAudioManager from './SpatialAudioManager';
 import Modal from './Modal';
+import FilterToggle from './FilterToggle';
 
 export default function MapViewer({ locations }) {
   const [modalInfo, setModalInfo] = useState(null);
   const [currentTrack, setCurrentTrack] = useState(null);
+  const [activeFilter, setActiveFilter] = useState(null);
+  const [filteredLocations, setFilteredLocations] = useState(locations);
   const mapRef = useRef(null);
   const audioManagerRef = useRef(null);
   const [hovering, setHovering] = useState(false);
@@ -44,13 +48,57 @@ export default function MapViewer({ locations }) {
     };
   }, [locations]);
 
+  // Check URL for filter param on initial load
+  useEffect(() => {
+    const url = new URL(window.location);
+    const filterParam = url.searchParams.get('filter');
+    if (filterParam) {
+      setActiveFilter(filterParam);
+    }
+  }, []);
+
+  // Apply filtering when activeFilter changes and animate the map
+  useEffect(() => {
+    if (!activeFilter) {
+      setFilteredLocations(locations);
+    } else {
+      const filtered = locations.filter(location => 
+        location.data.filters && 
+        location.data.filters.includes(activeFilter)
+      );
+      setFilteredLocations(filtered);
+      
+      // Animate map if we have a map reference and locations to focus on
+      if (mapRef.current && filtered.length > 0) {
+        // Calculate bounds that include all filtered locations
+        const bounds = filtered.reduce(
+          (bounds, location) => {
+            bounds.extend([
+              location.data.coordinates[1],
+              location.data.coordinates[0],
+            ]);
+            return bounds;
+          },
+          new mapboxgl.LngLatBounds()
+        );
+        
+        // Animate to these bounds
+        mapRef.current.fitBounds(bounds, {
+          padding: 100,
+          duration: 1000,
+          maxZoom: 14, // Don't zoom in too far
+        });
+      }
+    }
+  }, [activeFilter, locations]);
+
   // Setup mouse move handler for hover audio
   useEffect(() => {
     if (!audioLoaded || !audioManagerRef.current || !mapRef.current) return;
     
     const handleMouseMove = (e) => {
       audioManagerRef.current.resumeAudioContext();
-      audioManagerRef.current.handleMouseMove(e, locations, mapRef);
+      audioManagerRef.current.handleMouseMove(e, filteredLocations, mapRef);
     };
     
     const mapContainer = mapRef.current.getContainer();
@@ -69,7 +117,7 @@ export default function MapViewer({ locations }) {
       mapContainer.removeEventListener('mousemove', handleMouseMove);
       mapContainer.removeEventListener('mouseleave', handleMouseLeave);
     };
-  }, [locations, audioLoaded]);
+  }, [filteredLocations, audioLoaded]);
 
   // Handle playing audio on explicit click
   const handlePlayAudio = (location) => {
@@ -99,13 +147,19 @@ export default function MapViewer({ locations }) {
     }
   };
 
-  // Close modal - now handled by the Modal component with animation
+  // Close modal
   const closeModal = () => {
     setModalInfo(null);
   };
 
   return (
     <div className="relative h-full">
+      <FilterToggle 
+        locations={locations} 
+        activeFilter={activeFilter} 
+        setActiveFilter={setActiveFilter} 
+      />
+      
       <Map
         ref={mapRef}
         initialViewState={{
@@ -113,6 +167,7 @@ export default function MapViewer({ locations }) {
           latitude: import.meta.env.PUBLIC_DEFAULT_LATITUDE,
           zoom: 12
         }}
+        logoPosition='bottom-right'
         onClick={handleMapInteraction}
         onTouchStart={handleMapInteraction}
         style={{ width: '100%', height: '100vh' }}
@@ -126,24 +181,25 @@ export default function MapViewer({ locations }) {
         maxZoom={14}
         minZoom={11}
       >
-        {locations.map((location) => (
+        {filteredLocations.map((location) => (
           <Marker
             key={location.slug}
             longitude={location.data.coordinates[1]}
             latitude={location.data.coordinates[0]}
             anchor="bottom"
-            className='text-5xl cursor-pointer'
+            className={`text-5xl cursor-pointer transition-transform ${activeFilter ? 'filter-active' : ''}`}
             onClick={e => {
               e.originalEvent.stopPropagation();
               setModalInfo(location);
             }}
           >
+            {/* We could use different emoji or markers based on filters */}
             📍
           </Marker>
         ))}
       </Map>
 
-      {/* Custom Modal instead of Popup */}
+      {/* Custom Modal */}
       <Modal 
         info={modalInfo} 
         onClose={closeModal} 

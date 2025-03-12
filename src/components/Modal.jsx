@@ -43,6 +43,13 @@ const Modal = ({ info, onClose, onPlayAudio }) => {
     }, 300); // Match this to the CSS transition duration
   };
 
+  // Helper to navigate to filtered view
+  const navigateToFilter = (filter) => {
+    const url = new URL(window.location);
+    url.searchParams.set('filter', filter);
+    window.location.href = url.toString();
+  };
+
   if (!info) return null;
 
   return (
@@ -77,6 +84,20 @@ const Modal = ({ info, onClose, onPlayAudio }) => {
           </div>
           
           <div className="p-4 space-y-2">
+            {/* Show filters as clickable badges */}
+            {info.data.filters && info.data.filters.length > 0 && (
+              <div className="mb-2 flex flex-wrap gap-1">
+                {info.data.filters.map(filter => (
+                  <button 
+                    key={filter}
+                    onClick={() => navigateToFilter(filter)}
+                    className="bg-p60-blue text-white text-xs px-2 py-1 rounded-sm hover:bg-p60-orange transition-colors"
+                  >
+                    {filter}
+                  </button>
+                ))}
+              </div>
+            )}
 
             {info.data.audioFile && (
               <div className="bg-white border-2 border-p60-blue rounded-sm flex items-center space-x-2">
@@ -95,7 +116,7 @@ const Modal = ({ info, onClose, onPlayAudio }) => {
             {info.data.image &&
               <div className='bg-white rounded-sm border-l-8 border-2 border-p60-blue relative'>
                 {info.data.caption && <p className="bg-p60-blue mt-2 absolute text-xs px-2 text-white inline-block">{info.data.caption}</p>}
-                <img src={info.data.image} />
+                <img src={info.data.image} alt={info.data.caption || info.data.title} />
               </div> 
             }
 
