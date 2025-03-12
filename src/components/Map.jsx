@@ -230,7 +230,7 @@ export default function MapViewer({ locations }) {
               setModalInfo(location);
             }}
           >
-            {/* We could use different emoji or markers based on filters */}
+            
             📍
           </Marker>
         ))}

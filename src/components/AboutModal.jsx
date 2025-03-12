@@ -102,6 +102,7 @@ const AboutModal = ({ isOpen, onClose }) => {
               <p className="mb-2">
                 This project was created by students at Camberwell College of Arts and led by <a class="underline underline-offset-2" href="https://www.arts.ac.uk/colleges/camberwell-college-of-arts/people/jack-clarke">Jack Clarke</a> with assistance from Citizens UK.
               </p>
+              <p className="mb-2">Thanks to Joab Nicholson, Iara Cardeira & George Underwood for the design of this site.</p>
               <p>
                 Listenings, recordings, and content collected in 2025. Many thanks to all who gave up their time to contribute to this research.
               </p>
