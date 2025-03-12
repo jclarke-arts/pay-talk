@@ -21,22 +21,5 @@ const processedLocations = await Promise.all(
 ---
 
 <Layout title="Interactive Location Map with Audio Guides">
-  <nav class="fixed z-20 w-full p-2 flex justify-between">
-    <div class="p-3">
-      <p class="font-serif text-5xl text-p60-blue inline-block tracking-tight">
-        <span class="italic stroke">Pay</span><span
-          class="ml-0.5 translate-y-0.5 inline-block font-sans tracking-[-0.3rem]"
-          >talk</span
-        >
-      </p>
-    </div>
-    <div
-      class="p-3 m-3 bg-p60-blue hover:bg-p60-orange transform cursor-pointer text-p60-paper rounded-full w-10 h-10 flex justify-center items-center"
-    >
-      <p class="text-3xl font-serif italic translate-y-0.5 -translate-x-0.25">
-        i
-      </p>
-    </div>
-  </nav>
   <MapViewer client:only="react" locations={processedLocations} />
 </Layout>

@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 const Modal = ({ info, onClose, onPlayAudio }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const rotationAngle = useRef(Math.random() * 4 - 2);
   
   // Handle showing/hiding the modal with animation timing
   useEffect(() => {
     if (info) {
       // Show immediately when info is provided
       setIsVisible(true);
+      // Generate a new random rotation when opening
+      rotationAngle.current = Math.random() * 4 - 2;
     } else {
       // Don't do anything when info becomes null, that's handled by closeWithAnimation
     }
@@ -43,11 +46,19 @@ const Modal = ({ info, onClose, onPlayAudio }) => {
     }, 300); // Match this to the CSS transition duration
   };
 
-  // Helper to navigate to filtered view
+  // Helper to navigate to filtered view without page refresh
   const navigateToFilter = (filter) => {
     const url = new URL(window.location);
     url.searchParams.set('filter', filter);
-    window.location.href = url.toString();
+    
+    // Update URL without refreshing the page
+    window.history.pushState({}, '', url);
+    
+    // Close the modal
+    closeWithAnimation();
+    
+    // We need to dispatch a custom event so the Map component can update its filter
+    window.dispatchEvent(new CustomEvent('filterChange', { detail: filter }));
   };
 
   if (!info) return null;
@@ -64,13 +75,14 @@ const Modal = ({ info, onClose, onPlayAudio }) => {
       
       {/* Modal content */}
       <div 
-        className={`relative bg-p60-paper rounded-sm md:-rotate-1 shadow-lg border-2 border-p60-blue max-w-lg w-auto md:max-h-[90vh] md:aspect-[1/1.4142] overflow-auto transition-all duration-300 ease-in-out ${
+        className={`relative bg-p60-paper rounded-sm shadow-lg border-2 border-p60-blue max-w-lg w-auto md:max-h-[90vh] md:aspect-[1/1.4142] overflow-auto transition-all duration-300 ease-in-out ${
           isVisible ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-105 translate-y-4'
         }`}
+        style={{ transform: `rotate(${rotationAngle.current}deg)` }}
         onClick={(e) => e.stopPropagation()}
       >
      
-          <div className="px-4 py-2 flex items-center justify-between bg-p60-orange border-b-2 border-p60-blue text-sm font-sans font-bold">
+          <div className="px-4 py-2 flex items-center justify-between bg-p60-orange border-b-2 border-p60-blue text-sm font-sans font-bold sticky top-0">
             <h2 className="bg-white border-2 border-l-8 border-p60-blue py-1 px-2 rounded-xs">{info.data.title}</h2>
             <button 
               onClick={closeWithAnimation}

@@ -6,12 +6,14 @@ import AudioPlayer from './AudioPlayer';
 import SpatialAudioManager from './SpatialAudioManager';
 import Modal from './Modal';
 import FilterToggle from './FilterToggle';
+import AboutModal from './AboutModal';
 
 export default function MapViewer({ locations }) {
   const [modalInfo, setModalInfo] = useState(null);
   const [currentTrack, setCurrentTrack] = useState(null);
   const [activeFilter, setActiveFilter] = useState(null);
   const [filteredLocations, setFilteredLocations] = useState(locations);
+  const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
   const mapRef = useRef(null);
   const audioManagerRef = useRef(null);
   const [hovering, setHovering] = useState(false);
@@ -48,13 +50,26 @@ export default function MapViewer({ locations }) {
     };
   }, [locations]);
 
-  // Check URL for filter param on initial load
+  // Check URL for filter param on initial load and listen for filter change events
   useEffect(() => {
+    // Read filter from URL
     const url = new URL(window.location);
     const filterParam = url.searchParams.get('filter');
     if (filterParam) {
       setActiveFilter(filterParam);
     }
+    
+    // Listen for filter change events from modal
+    const handleFilterChange = (event) => {
+      setActiveFilter(event.detail);
+    };
+    
+    window.addEventListener('filterChange', handleFilterChange);
+    
+    // Clean up event listener
+    return () => {
+      window.removeEventListener('filterChange', handleFilterChange);
+    };
   }, []);
 
   // Apply filtering when activeFilter changes and animate the map
@@ -152,8 +167,30 @@ export default function MapViewer({ locations }) {
     setModalInfo(null);
   };
 
+  // Toggle about modal
+  const toggleAboutModal = () => {
+    setIsAboutModalOpen(!isAboutModalOpen);
+  };
+
   return (
     <div className="relative h-full">
+      {/* Header with logo and info button */}
+      <div className="fixed z-20 w-full p-2 flex justify-between">
+        <div className="p-3">
+          <p className="font-serif text-5xl text-p60-blue inline-block tracking-tight">
+            <span className="italic stroke">Pay</span>
+            <span className="ml-0.5 translate-y-0.5 inline-block font-sans tracking-[-0.3rem]">talk</span>
+          </p>
+        </div>
+        <button
+          onClick={toggleAboutModal}
+          className="p-3 m-3 bg-p60-blue border-p60-paper border-3 hover:bg-p60-orange transform cursor-pointer text-p60-paper rounded-full w-12 h-12 flex justify-center items-center transition-colors"
+          aria-label="About this project"
+        >
+          <p className="text-4xl font-serif italic translate-y-0.5 -translate-x-0.25">i</p>
+        </button>
+      </div>
+      
       <FilterToggle 
         locations={locations} 
         activeFilter={activeFilter} 
@@ -204,6 +241,12 @@ export default function MapViewer({ locations }) {
         info={modalInfo} 
         onClose={closeModal} 
         onPlayAudio={handlePlayAudio} 
+      />
+      
+      {/* About Modal */}
+      <AboutModal 
+        isOpen={isAboutModalOpen} 
+        onClose={() => setIsAboutModalOpen(false)} 
       />
       
       {/* Persistent audio player */}

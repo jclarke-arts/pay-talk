@@ -118,7 +118,7 @@ const AudioPlayer = ({ currentTrack, onClose }) => {
   if (!currentTrack) return null;
   
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-p60-blue text-p60-paper p-3 z-50">
+    <div className="fixed w-max md:w-1/2 rounded-sm mx-4 bottom-16 md:bottom-4 md:right-4 left-0 md:left-auto bg-p60-blue text-p60-paper p-3 z-50">
       <div className="max-w-screen-lg mx-auto flex items-center">
         <audio 
           ref={audioRef} 

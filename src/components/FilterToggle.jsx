@@ -76,16 +76,16 @@ const FilterToggle = ({ locations, activeFilter, setActiveFilter }) => {
   }, [isOpen]);
 
   return (
-    <div className="absolute bottom-4 left-4 z-10 filter-dropdown">
+    <div className="absolute bottom-4 left-4 z-60 filter-dropdown">
       <div className="relative">
         <button 
           onClick={toggleDropdown}
-          className={`cursor-pointer flex text-xs items-center pr-1 space-x-2 ${activeFilter ? 'bg-p60-orange border-p60-orange text-p60-paper hover:text-p60-orange' : 'bg-p60-paper border-p60-blue text-p60-blue '} border-2 rounded-sm shadow-md transition-colors`}
+          className={`cursor-pointer flex text-xs items-center pr-1 space-x-2 ${activeFilter ? 'bg-p60-orange border-p60-orange text-p60-paper hover:text-p60-orange' : 'bg-p60-paper border-p60-blue text-p60-blue '} border-2 rounded-sm transition-colors`}
         >
           <div className={`${activeFilter ? "bg-p60-orange" : 'bg-p60-blue'} py-2 px-1 transition`}>
             <p className='text-p60-paper'>★</p>
           </div>
-          <span>{activeFilter || 'All Locations'}</span>
+          <span>{activeFilter || 'All Filters'}</span>
           <svg 
             xmlns="http://www.w3.org/2000/svg" 
             className={`h-4 w-4 ml-1 transition-transform ${isOpen ? 'rotate-180' : ''}`} 
@@ -98,13 +98,13 @@ const FilterToggle = ({ locations, activeFilter, setActiveFilter }) => {
         </button>
         
         {isOpen && (
-          <div className="absolute bottom-0 left-0 mt-1 w-64 bg-white border-2 border-p60-blue rounded-sm shadow-lg z-20">
+          <div className="absolute bottom-0 left-0 mt-1 w-64 bg-white border-2 border-p60-blue rounded-sm z-20">
             <div className="py-1">
               <button
                 onClick={clearFilters}
                 className={`block w-full text-left px-4 py-2 text-xs hover:bg-p60-paper hover:text-p60-blue ${!activeFilter ? 'font-bold bg-p60-paper' : ''}`}
               >
-                All Locations <span className="text-xs text-gray-500 ml-1">({locations.length})</span>
+                All Filters <span className="text-xs text-gray-500 ml-1">({locations.length})</span>
               </button>
               
               {filters.map((filter) => (
