@@ -137,7 +137,7 @@ export default function MapViewer({ locations }) {
             onClose={() => setPopupInfo(null)}
           >
             <div className="popup">
-              <h3>{popupInfo.data.title}</h3>
+              <h3 className="">{popupInfo.data.title}</h3>
               <p>{popupInfo.body}</p>
               
               {popupInfo.data.audioFile && (

@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Old+Standard+TT:ital@0;1&display=swap');
 @import "tailwindcss";
 
 @font-face {
@@ -6,7 +7,38 @@
 }
 
 @theme {
-  --font-sans: "technomat", "sans-serif"; 
-  --color-p60-blue: "#021B4C";
-  --color-p60-orange: "#fc6902";
+  --font-sans: "technomat", sans-serif; 
+  --font-serif: "Old Standard TT", serif;
+  --color-p60-blue: #021B4C;
+  --color-p60-orange: #fc6902;
+  --color-p60-paper: #fde4d4;
+}
+
+html,
+body {
+  @apply w-full h-full m-0 p-0;
+}
+
+.popup {
+  @apply font-sans max-w-[400px] p-2.5;
+}
+
+.popup h3 {
+  @apply mt-0 mb-2.5 mx-0 text-2xl;
+}
+
+.popup p {
+  @apply font-serif mb-3 m-0;
+}
+
+input[type="range"] {
+  @apply h-1 rounded-[5px] bg-white;
+  -webkit-appearance: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  @apply h-3 w-3 cursor-pointer rounded-[50%] bg-p60-orange;
+  -webkit-appearance: none;
+}
+input[type="range"]::-moz-range-thumb {
+  @apply h-3 w-3 cursor-pointer rounded-[50%] border-[none] bg-p60-orange;
 }

@@ -15,8 +15,10 @@ const processedLocations = locations.map((location) => ({
 ---
 
 <Layout title="Interactive Location Map with Audio Guides">
-  <nav class="fixed z-20 bg-white p-6">
-    <p>The Pay Talk Project</p>
+  <nav
+    class="fixed z-20 bg-white text-p60-orange p-4 m-4 rounded-3xl shadow-md"
+  >
+    <p>📍 The Pay Talk Project</p>
   </nav>
   <MapViewer client:only="react" locations={processedLocations} />
 </Layout>

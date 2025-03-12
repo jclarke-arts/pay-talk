@@ -1,6 +1,6 @@
 ---
 title: "Big Ben"
-coordinates: [51.500729, -0.124625]
+coordinates: [51.480729, -0.124625]
 audioFile: "/audios/test-1.mp3"
 audioTitle: "History of Big Ben"
 ---

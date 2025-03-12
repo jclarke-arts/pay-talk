@@ -1,6 +1,6 @@
 ---
 title: "Eiffel Tower"
-coordinates: [48.858372, 2.294481]
+coordinates: [51.50000, -0.104625]
 audioFile: "/audios/test-2.mp3"
 audioTitle: "History of the Eiffel Tower"
 ---
