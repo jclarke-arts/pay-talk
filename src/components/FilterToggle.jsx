@@ -98,7 +98,7 @@ const FilterToggle = ({ locations, activeFilter, setActiveFilter }) => {
         </button>
         
         {isOpen && (
-          <div className="absolute bottom-0 left-0 mt-1 w-64 bg-white border-2 border-p60-blue rounded-sm z-20">
+          <div className="absolute bottom-0 left-0 mt-1 w-64 bg-white border-2 border-p60-blue rounded-sm z-20 max-h-96 overflow-y-scroll">
             <div className="py-1">
               <button
                 onClick={clearFilters}

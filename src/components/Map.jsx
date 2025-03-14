@@ -20,35 +20,35 @@ export default function MapViewer({ locations }) {
   const [audioLoaded, setAudioLoaded] = useState(false);
 
   // Initialize audio manager on mount
-  useEffect(() => {
-    audioManagerRef.current = new SpatialAudioManager();
+  // useEffect(() => {
+  //   audioManagerRef.current = new SpatialAudioManager();
     
-    // Load all audio files
-    const loadAudioFiles = async () => {
-      const promises = locations.map(location => {
-        if (location.data.audioFile) {
-          return audioManagerRef.current.loadAudio(
-            location.slug, 
-            location.data.audioFile
-          );
-        }
-        return Promise.resolve(false);
-      });
+  //   // Load all audio files
+  //   const loadAudioFiles = async () => {
+  //     const promises = locations.map(location => {
+  //       if (location.data.audioFile) {
+  //         return audioManagerRef.current.loadAudio(
+  //           location.slug, 
+  //           location.data.audioFile
+  //         );
+  //       }
+  //       return Promise.resolve(false);
+  //     });
       
-      await Promise.all(promises);
-      setAudioLoaded(true);
-    };
+  //     await Promise.all(promises);
+  //     setAudioLoaded(true);
+  //   };
     
-    loadAudioFiles();
+  //   loadAudioFiles();
     
-    // Cleanup
-    return () => {
-      if (audioManagerRef.current) {
-        audioManagerRef.current.stopHoverAudio();
-        audioManagerRef.current.stopPersistentAudio();
-      }
-    };
-  }, [locations]);
+  //   // Cleanup
+  //   return () => {
+  //     if (audioManagerRef.current) {
+  //       audioManagerRef.current.stopHoverAudio();
+  //       audioManagerRef.current.stopPersistentAudio();
+  //     }
+  //   };
+  // }, [locations]);
 
   // Check URL for filter param on initial load and listen for filter change events
   useEffect(() => {
@@ -108,31 +108,31 @@ export default function MapViewer({ locations }) {
   }, [activeFilter, locations]);
 
   // Setup mouse move handler for hover audio
-  useEffect(() => {
-    if (!audioLoaded || !audioManagerRef.current || !mapRef.current) return;
+  // useEffect(() => {
+  //   if (!audioLoaded || !audioManagerRef.current || !mapRef.current) return;
     
-    const handleMouseMove = (e) => {
-      audioManagerRef.current.resumeAudioContext();
-      audioManagerRef.current.handleMouseMove(e, filteredLocations, mapRef);
-    };
+  //   const handleMouseMove = (e) => {
+  //     audioManagerRef.current.resumeAudioContext();
+  //     audioManagerRef.current.handleMouseMove(e, filteredLocations, mapRef);
+  //   };
     
-    const mapContainer = mapRef.current.getContainer();
-    mapContainer.addEventListener('mousemove', handleMouseMove);
+  //   const mapContainer = mapRef.current.getContainer();
+  //   mapContainer.addEventListener('mousemove', handleMouseMove);
     
-    // Mouse leave event to stop audio when leaving the map
-    const handleMouseLeave = () => {
-      audioManagerRef.current.stopHoverAudio();
-      setHovering(false);
-    };
+  //   // Mouse leave event to stop audio when leaving the map
+  //   const handleMouseLeave = () => {
+  //     audioManagerRef.current.stopHoverAudio();
+  //     setHovering(false);
+  //   };
     
-    mapContainer.addEventListener('mouseleave', handleMouseLeave);
+  //   mapContainer.addEventListener('mouseleave', handleMouseLeave);
     
-    // Cleanup
-    return () => {
-      mapContainer.removeEventListener('mousemove', handleMouseMove);
-      mapContainer.removeEventListener('mouseleave', handleMouseLeave);
-    };
-  }, [filteredLocations, audioLoaded]);
+  //   // Cleanup
+  //   return () => {
+  //     mapContainer.removeEventListener('mousemove', handleMouseMove);
+  //     mapContainer.removeEventListener('mouseleave', handleMouseLeave);
+  //   };
+  // }, [filteredLocations, audioLoaded]);
 
   // Handle playing audio on explicit click
   const handlePlayAudio = (location) => {

@@ -82,7 +82,7 @@ const Modal = ({ info, onClose, onPlayAudio }) => {
         onClick={(e) => e.stopPropagation()}
       >
      
-          <div className="px-4 py-2 flex items-center justify-between bg-p60-orange border-b-2 border-p60-blue text-sm font-sans font-bold sticky top-0">
+          <div className="px-4 py-2 flex items-center justify-between bg-p60-orange border-b-2 border-p60-blue text-sm font-sans font-bold sticky top-0 z-10">
             <h2 className="bg-white border-2 border-l-8 border-p60-blue py-1 px-2 rounded-xs">{info.data.title}</h2>
             <button 
               onClick={closeWithAnimation}
@@ -127,14 +127,14 @@ const Modal = ({ info, onClose, onPlayAudio }) => {
             
             {info.data.image &&
               <div className='bg-white rounded-sm border-l-8 border-2 border-p60-blue relative'>
-                {info.data.caption && <p className="bg-p60-blue mt-2 absolute text-xs px-2 text-white inline-block">{info.data.caption}</p>}
+                {info.data.caption && <p className="bg-p60-blue mt-2 absolute text-xs px-2 text-white inline-block max-w-2/3">{info.data.caption}</p>}
                 <img src={info.data.image} alt={info.data.caption || info.data.title} />
               </div> 
             }
 
             <div className='px-2 pb-3 bg-white rounded-sm border-l-8 border-2 border-p60-blue'>
               <p className="bg-p60-blue -mt-2 -ml-2 mb-2 text-xs px-2 text-white inline-block">description(s)</p>
-              <div className="font-serif pr-2" dangerouslySetInnerHTML={{ __html: info.body }} />
+              <div className="font-serif pr-2 whitespace-break-spaces">{info.body}</div>
             </div> 
 
             <div className='w-1/2 px-2 pb-3 bg-white rounded-sm border-l-8 border-2 border-p60-blue'>

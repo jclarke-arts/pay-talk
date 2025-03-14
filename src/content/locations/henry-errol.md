@@ -1,9 +1,11 @@
 ---
 title: "In Conversation with Errol"
 coordinates: [51.478265, -0.026879]
-audioFile: "/audios/test-1.mp3"
+audioFile: "https://3c4s07blod.ufs.sh/f/MRWvkGsH3I723ItLgP1rYeSxZUCJ7WhivaN4lqHPMg9bz0uF"
 audioTitle: "In Conversation with Errol"
 author: "Henry Bennett"
+image: "/images/deptford.jpg"
+caption: "1980s Deptford"
 filters: ["Hospitality", "Deptford"]
 ---
 
