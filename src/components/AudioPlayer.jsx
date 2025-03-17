@@ -129,7 +129,7 @@ const AudioPlayer = ({ currentTrack, onClose }) => {
         <div className="flex-shrink-0 w-12 flex justify-center">
           <button 
             onClick={togglePlayPause}
-            className="w-10 h-10 rounded-full bg-p60-orange text-p60-paper flex items-center justify-center"
+            className="w-10 h-10 rounded-full bg-p60-orange hover:bg-p60-orange/50 text-p60-paper flex items-center justify-center cursor-pointer"
           >
             {isPlaying ? (
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
@@ -163,7 +163,7 @@ const AudioPlayer = ({ currentTrack, onClose }) => {
         
         <button 
           onClick={onClose} 
-          className="bg-p60-paper rounded-full w-10 h-10 flex justify-center items-center text-p60-blue ml-2"
+          className="cursor-pointer bg-p60-paper hover:bg-p60-paper/50 rounded-full w-10 h-10 flex justify-center items-center text-p60-blue ml-2"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
             <path fillRule="evenodd" d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z" clipRule="evenodd" />

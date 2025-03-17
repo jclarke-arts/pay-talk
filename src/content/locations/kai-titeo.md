@@ -6,7 +6,7 @@ audioTitle: "Voices of Foreign Creatives in the UK"
 author: "Chang Kai Chu"
 image: "/images/kai-1.jpg"
 caption: "Foreign Worker in UK"
-filters: ["Creative sector"]
+filters: ["Creative Sector"]
 ---
 
 Titeo is a graphic designer from Nantes, has made London his creative base. As he juggles full-time work and freelancing, he’s venturing into 3D design. Along the way, he reflects on the industry, the high cost of living, and the complexities of a long-distance relationship with his girlfriend in LA.

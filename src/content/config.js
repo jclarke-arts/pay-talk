@@ -7,6 +7,7 @@ const locations = defineCollection({
     author: z.string(),
     coordinates: z.array(z.number()).length(2),
     image: z.string().optional(),
+    video: z.string().optional(),
     caption: z.string().optional(),
     audioFile: z.string().optional(),
     audioTitle: z.string().optional(),

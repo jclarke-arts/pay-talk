@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import ReactPlayer from 'react-player';
 
 const Modal = ({ info, onClose, onPlayAudio }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -86,7 +87,7 @@ const Modal = ({ info, onClose, onPlayAudio }) => {
             <h2 className="bg-white border-2 border-l-8 border-p60-blue py-1 px-2 rounded-xs">{info.data.title}</h2>
             <button 
               onClick={closeWithAnimation}
-              className="text-black hover:text-white transition-colors"
+              className="text-black hover:text-white transition-colors cursor-pointer"
               aria-label="Close"
             >
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
@@ -130,6 +131,11 @@ const Modal = ({ info, onClose, onPlayAudio }) => {
                 {info.data.caption && <p className="bg-p60-blue mt-2 absolute text-xs px-2 text-white inline-block max-w-2/3">{info.data.caption}</p>}
                 <img src={info.data.image} alt={info.data.caption || info.data.title} />
               </div> 
+            }
+            {info.data.video &&
+              <div className='bg-white rounded-sm border-l-8 border-2 border-p60-blue relative'>
+                <ReactPlayer className="w-full h-auto" url={info.data.video} />
+              </div>
             }
 
             <div className='px-2 pb-3 bg-white rounded-sm border-l-8 border-2 border-p60-blue'>

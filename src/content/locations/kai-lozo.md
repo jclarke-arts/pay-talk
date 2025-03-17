@@ -6,7 +6,7 @@ audioTitle: "Voices of Foreign Creatives in the UK"
 author: "Chang Kai Chu"
 image: "/images/kai-1.jpg"
 caption: "Foreign Worker in UK"
-filters: ["Creative sector"]
+filters: ["Creative Sector"]
 ---
 
 Lozo, originally from Lyon, has spent seven years in the UK, studying and building his career in design. Over coffee, he reflects on his journey from navigating the creative industry to the challenges of securing a work visa. He shares his thoughts on career growth, the cost of living in London, and what it takes to thrive as an international designer.

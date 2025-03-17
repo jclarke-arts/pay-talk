@@ -6,7 +6,7 @@ audioTitle: "Long way from home"
 author: "Anh Truong"
 image: "/images/anh.png"
 caption: "Overlayed Roads"
-filters: ["Commuting"]
+filters: ["Transportation"]
 ---
 
 What is it like when a system or schedule dictates your lifestyle? When your day begins and ends in the same way, shaped by forces beyond your control? When the world around you is constantly shifting, and yet you must learn to adapt, continuing rearranging your life to fit into an ever-changing system?

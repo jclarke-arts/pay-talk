@@ -1,6 +1,6 @@
 ---
 title: "The Realities of a Sixteen Year Old KP in London"
-coordinates: [51.504171, -0.118351]
+coordinates: [51.450592, -0.061966]
 audioFile: "https://3c4s07blod.ufs.sh/f/MRWvkGsH3I72UlxBTrzadyN7S2xDve4ULAuMaszl908mqfYI"
 audioTitle: "The Realities of a Sixteen Year Old KP in London"
 author: "Iara Cardeira"
@@ -9,8 +9,8 @@ caption: "A point-of-view photograph of a fairly empty sink taken right before a
 filters:
   [
     "Hospitality",
-    "Age Discrimination",
-    "Under 18s in work",
+    "Social Challenges",
+    "Young People",
     "Kitchen Porter",
     "Point-of-View Interviews",
   ]

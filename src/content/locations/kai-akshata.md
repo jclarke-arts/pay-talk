@@ -6,7 +6,7 @@ audioTitle: "Voices of Foreign Creatives in the UK"
 author: "Chang Kai Chu"
 image: "/images/kai-2.jpg"
 caption: "Foreign Worker in UK"
-filters: ["Creative sector"]
+filters: ["Creative Sector"]
 ---
 
 Akshata, a recent Fine Arts graduate from India, is currently interning as a photographer in London. Over our conversation, she reflects on the challenges of finding stable work, navigating visa uncertainties, and debating a Master’s in Graphic Design, all while balancing the city’s vibrant creative scene with its high cost of living.

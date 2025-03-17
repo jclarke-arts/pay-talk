@@ -6,7 +6,7 @@ audioTitle: "The City's Promise of Creative Access"
 author: "Ted Hawthorn"
 image: "/images/ted.jpeg"
 caption: "Soho, London"
-filters: ["The city", "The arts", "Immigration", "Community"]
+filters: ["London", "Creative Sector", "Migration", "Community"]
 ---
 
 Füruğ and Harry both work similar jobs and share social groups - a community formed by their involvement in central London's back of house retail environment. Coming from contrasting backgrounds, this audio piece seeks to explore the differences in their journey to the inner city, comparing immigration to internal migration.
