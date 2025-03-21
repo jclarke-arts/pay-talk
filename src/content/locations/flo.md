@@ -5,7 +5,7 @@ audioFile: "https://3c4s07blod.ufs.sh/f/MRWvkGsH3I72h8Jxxr431nSdTMiDxeusPRKJZUfb
 audioTitle: "Daughters and Mothers"
 author: "Flo Bullivant"
 image: "/images/flo.jpg"
-caption: "Nights stretch on and on, accompanied by the bus' hum"
+caption: "Daughters and Mothers"
 filters: ["Family"]
 ---
 
